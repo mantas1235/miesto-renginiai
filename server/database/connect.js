@@ -1,61 +1,61 @@
-import { Sequelize } from 'sequelize'
-import mysql from 'mysql2/promise'
-import { Users, Events, Services, Ratings, Orders } from '../model/index.js'
+import Posts from "../model/posts.js";
+import { Sequelize } from "sequelize";
+import mysql from "mysql2/promise";
+import Users from "../model/users.js";
+import Orders from "../model/order"
+// import Comments from "../model/comments.js";
 
-const database = {}
-const credentials = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'Renginiai'
-}
+const database = {};
 
+const credent = {
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "Miesto_renginiai",
+};
+
+//SCHEMA KAIP PRISIJUNGTI PRIE SERVERIO
 try {
-    const connection = await mysql.createConnection({
-        host: credentials.host,
-        user: credentials.user,
-        password: credentials.password
-    })
+  const connection = await mysql.createConnection({
+    host: credent.host,
+    user: credent.user,
+    password: credent.password,
+  });
 
-    await connection.query('CREATE DATABASE IF NOT EXISTS ' + credentials.database)
+  //sukuria duomenu baze
+  await connection.query("CREATE DATABASE IF NOT EXISTS " + credent.database);
 
-    const sequelize = new Sequelize(credentials.database, credentials.user, credentials.password, { dialect: 'mysql' })
+  const sequelize = new Sequelize(
+    credent.database,
+    credent.user,
+    credent.password,
+    { dialect: "mysql" }
+  );
 
-    database.Users = Users(sequelize)
-    database.Events = Events(sequelize)
-    database.Services = Services(sequelize)
-    // database.Workers = Workers(sequelize)
-    database.Ratings = Ratings(sequelize)
-    database.Orders = Orders(sequelize)
+  database.Posts = Posts(sequelize);
+  database.Users = Users(sequelize);
+  database.Orders = Orders(sequelize);
 
-    // database.Events.hasOne(database.Workers)
-    // database.Workers.belongsTo(database.Events)
+  // database.Comments = Comments(sequelize);
 
-    database.Events.hasMany(database.Services)
-    database.Services.belongsTo(database.Events)
 
-    database.Users.hasMany(database.Orders)
-    database.Orders.belongsTo(database.Users)
+  // database.Users.hasMany(database.Posts, {
+  //   onDelete: 'RESTRICT',
+  //   onUpdate: 'RESTRICT'
+  // })
 
-    database.Services.hasOne(database.Orders)
-    database.Orders.belongsTo(database.Services)
 
-    database.Users.hasOne(database.Ratings)
-    database.Ratings.belongsTo(database.Users)
+  database.Posts.belongsTo(database.Users)
+  database.Posts.hasOne(database.Users)
+  database.Users.hasMany(database.Posts)
+  // database.Posts.hasMany(database.Comments)
 
-    // database.Workers.hasMany(database.Ratings)
-    // database.Ratings.belongsTo(database.Workers)
-
-    // database.Workers.hasMany(database.Orders)
-    // database.Orders.belongsTo(database.Workers)
-
-    database.Orders.hasOne(database.Ratings)
-    database.Ratings.belongsTo(database.Orders)
-
-    await sequelize.sync({ alter: true })
+  await sequelize.sync({ alter: true });
 } catch (error) {
-    console.log(error)
-    console.log('Nepavyko prisijungti prie duomenų bazės');
+  console.log(error);
+  console.log("Nepavyko prisijungti prie domenu bazes");
 }
 
-export default database
+export default database;
+
+

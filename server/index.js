@@ -1,41 +1,45 @@
-import express from 'express'
-import cors from 'cors'
-import session from 'express-session'
-import { Events, Services, Orders, Users, Ratings } from './controller/index.js'
+import express from "express";
+import database from "./database/connect.js";
+import posts from "./controller/posts.js";
+import cors from "cors";
+import session from "express-session";
+import users from "./controller/users.js";
+// import comments from "./controller/comments.js";
 
-const app = express()
 
-//CORS blokavimo nuėmimas 
-app.use(cors())
 
-//Duomenų priėmimui JSON formatu
-app.use(express.json())
 
-//Failu perdavimui is statinės direktorijos
+const app = express();
+
+app.use(express.urlencoded({ extendet: true }));
+
 app.use('/uploads', express.static('uploads'))
 
-//Duomenų priėmimui POST metodu
-app.use(express.urlencoded({ extended: true }))
 
-//Sesijos konfigūracija
-app.set('trust proxy', 1)
+app.use(cors());
+
+app.use(express.json());
+
+app.set('trust proxy', 1) // trust first proxy
 
 app.use(session({
-    secret: 'labai slapta fraze',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false,
-        maxAge: 6000000
-    }
+  secret: 'nieko nesuprantu',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 600000
+  }
 }))
 
-//Kontrolerių priskyrimas
-app.use('/api/events/', Events)
-app.use('/api/services/', Services)
-app.use('/api/orders/', Orders)
-app.use('/api/users/', Users)
-app.use('/api/ratings/', Ratings)
 
-//Paleidžiame serverį
-app.listen(3000)
+
+app.use('/api/posts/', posts);
+
+app.use('/users/', users)
+
+
+// app.use('/comments/', comments)
+
+
+app.listen(3000);
