@@ -31,7 +31,7 @@ app.use(session({
 }))
 
 //Kontrolerių priskyrimas
-app.use('/api/Events/', Events)
+app.use('/api/events/', Events)
 app.use('/api/services/', Services)
 app.use('/api/orders/', Orders)
 app.use('/api/users/', Users)

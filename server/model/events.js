@@ -18,7 +18,7 @@ const Events = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        image: {
+        photo: {
             type: DataTypes.STRING,
             allowNull: false
         },
