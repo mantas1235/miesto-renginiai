@@ -55,23 +55,23 @@ export const loginValidator = (req, res, next) => {
     validate(schema, req, res, next)
 }
 
-export const workersValidator = (req, res, next) => {
-    const schema = Joi.object({
-        first_name: Joi.string().min(2).required(),
-        last_name: Joi.string().min(2).required(),
-        saloonId: Joi.number().integer().required(),
-        photo: Joi.string().allow('')
-    })
+// export const workersValidator = (req, res, next) => {
+//     const schema = Joi.object({
+//         first_name: Joi.string().min(2).required(),
+//         last_name: Joi.string().min(2).required(),
+//         saloonId: Joi.number().integer().required(),
+//         photo: Joi.string().allow('')
+//     })
 
-    validate(schema, req, res, next)
-}
+//     validate(schema, req, res, next)
+// }
 
 export const servicesValidator = (req, res, next) => {
     const schema = Joi.object({
         name: Joi.string().min(2).required(),
         duration: Joi.string().min(2).required(),
         price: Joi.number().required(),
-        saloonId: Joi.number().integer().required()
+        eventsId: Joi.number().integer().required()
     })
 
     validate(schema, req, res, next)
@@ -100,7 +100,6 @@ export const ordersValidator = (req, res, next) => {
         order_date: Joi.date().required(),
         status: Joi.number().integer(),
         serviceId: Joi.number().integer().required(),
-        workerId: Joi.number().integer().required()
     })
 
     validate(schema, req, res, next)

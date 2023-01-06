@@ -39,7 +39,7 @@ Router.get('/single/:id', adminAuth, async (req, res) => {
     }
 })
 
-Router.post('/new', adminAuth, eventsValidator, async (req, res) => {
+Router.post('/new', async (req, res) => {
     try {
         await db.Events.create(req.body)
         res.send('Salonas sėkmingai sukurtas')
