@@ -2,7 +2,7 @@ import Posts from "../model/posts.js";
 import { Sequelize } from "sequelize";
 import mysql from "mysql2/promise";
 import Users from "../model/users.js";
-import Orders from "../model/order"
+import Orders from "../model/order.js"
 // import Comments from "../model/comments.js";
 
 const database = {};

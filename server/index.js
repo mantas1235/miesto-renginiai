@@ -1,9 +1,9 @@
 import express from "express";
-import database from "./database/connect.js";
 import posts from "./controller/posts.js";
 import cors from "cors";
 import session from "express-session";
 import users from "./controller/users.js";
+import orders from "./controller/orders.js"
 // import comments from "./controller/comments.js";
 
 
@@ -37,6 +37,8 @@ app.use(session({
 app.use('/api/posts/', posts);
 
 app.use('/users/', users)
+
+app.use('/orders/', orders)
 
 
 // app.use('/comments/', comments)

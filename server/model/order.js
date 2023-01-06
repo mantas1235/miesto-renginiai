@@ -1,6 +1,6 @@
 import { DataTypes, INTEGER } from "sequelize";
 
-const Users = (sequelize) => {
+const Orders = (sequelize) => {
     const Schema = {
         first_name: {
             type: DataTypes.STRING,
@@ -16,7 +16,7 @@ const Users = (sequelize) => {
         }
     }
 
-    return sequelize.define("users", Schema)
+    return sequelize.define("orders", Schema)
 }
 
-export default Users;
+export default Orders;
